@@ -71,4 +71,29 @@ export class UserRepositories {
       });
     });
   }
+
+  async searchAll() {
+    return new Promise<UserDTO[]>((resolve, reject) => {
+      const query = `SELECT * FROM usuario`;
+
+      this.connection.query(query, (err, result: RowDataPacket[]) => {
+        if (err) {
+          reject(err);
+        } else {
+          // Mapear os resultados para uma lista de UserDTOs
+          const users = result.map((row) => {
+            const user = new User(
+              row.nome,
+              row.email,
+              row.senha,
+              row.telefone,
+              row.tipo
+            );
+            return new UserDTO(user);
+          });
+          resolve(users);
+        }
+      });
+    });
+  }
 }

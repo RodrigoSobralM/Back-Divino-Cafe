@@ -25,4 +25,9 @@ export class UserService {
         return await this.userRepositories.findByEmail(email)
     }
 
+    async serchAll(): Promise<UserDTO[]> {
+        const users = await this.userRepositories.searchAll()
+        return users
+    }
+
 }
