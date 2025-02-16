@@ -38,4 +38,19 @@ export class UserController {
       });
     }
   }
+
+  async searchAll(res: Response): Promise<void> {
+    try {
+      const users = await this.userService.serchAll()
+      res.status(200).json({
+        message: "Usuários encontrados com sucesso!",
+        users,
+      })
+    } catch (error: any) {
+      res.status(500).json({
+        message: "Erro ao buscar usuários",
+        error: error.message
+      })
+    }
+  }
 }
