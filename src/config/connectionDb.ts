@@ -1,9 +1,7 @@
 import mysql from "mysql2";
+import dotenv from 'dotenv'
 
-// Definir o tipo para o resultado da consulta para testar a conexão
-type QueryResult = {
-  solution: number;
-};
+dotenv.config()
 
 export const connectDb = () => {
   const connect = mysql.createConnection({
@@ -14,16 +12,5 @@ export const connectDb = () => {
     database: process.env.DB_NAME,
   });
 
-  connect.connect();
-
-  // Query para testar se a conexão foi bem sucedida
-  connect.query("SELECT 1 + 1 AS solution", function (err: mysql.QueryError | null, rows: QueryResult[]) {
-    if (err) {
-      console.error("❌ Erro na consulta:", err.message);
-      return;
-    }
-    console.log("The solution is: ", rows[0].solution);
-  });
-
-  connect.end();
+  return connect;
 };
