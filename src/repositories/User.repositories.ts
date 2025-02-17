@@ -96,4 +96,28 @@ export class UserRepositories {
       });
     });
   }
+
+  async searchById(id: number): Promise<UserDTO | null> {
+    return new Promise<UserDTO | null>((resolve, reject) => {
+      const query = `SELECT * FROM usuario WHERE id = ?`;
+  
+      this.connection.query(query, [id], (err, result: RowDataPacket[]) => {
+        if (err) {
+          reject(err);
+        } else if (result.length === 0) {
+          resolve(null); // Retorna null se o usuário não for encontrado
+        } else {
+          const user = new User(
+            result[0].nome,
+            result[0].email,
+            result[0].senha,
+            result[0].telefone,
+            result[0].tipo
+          );
+          resolve(new UserDTO(user));
+        }
+      });
+    });
+  }
+  
 }

@@ -26,8 +26,12 @@ export class UserService {
     }
 
     async serchAll(): Promise<UserDTO[]> {
-        const users = await this.userRepositories.searchAll()
-        return users
+        return await this.userRepositories.searchAll()
+    
+    }
+
+    async searchById(id: number): Promise<UserDTO | null> {
+        return await this.userRepositories.searchById(id)
     }
 
 }
