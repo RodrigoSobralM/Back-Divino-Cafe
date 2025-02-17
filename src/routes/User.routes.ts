@@ -12,4 +12,8 @@ router.get("/users", async (req:Request, res: Response) => {
   await userController.searchAll(res)
 })
 
+router.get("/users/:id", async (req: Request, res: Response) => {
+  await userController.searchById(req, res);
+});
+
 export const UserRouter = router;
